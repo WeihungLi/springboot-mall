@@ -1,12 +1,14 @@
 package com.weihungli.springbootmall.model;
 
+import com.weihungli.springbootmall.constant.ProductCategory;
+
 import java.util.Date;
 
 public class Product {
 
     private int productId;
     private String productName;
-    private String productCategory;
+    private ProductCategory productCategory;
     private String productImgUrl;
     private int productPrice;
     private int productStock;
@@ -47,11 +49,11 @@ public class Product {
         this.productModifiedTime = productModifiedTime;
     }
 
-    public String getProductCategory() {
+    public ProductCategory getProductCategory() {
         return productCategory;
     }
 
-    public void setProductCategory(String productCategory) {
+    public void setProductCategory(ProductCategory productCategory) {
         this.productCategory = productCategory;
     }
 
