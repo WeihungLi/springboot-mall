@@ -1,12 +1,18 @@
 package com.weihungli.springbootmall.dao.Impl;
 
 import com.weihungli.springbootmall.dao.ProductDao;
+import com.weihungli.springbootmall.dto.ProductRequest;
 import com.weihungli.springbootmall.model.Product;
 import com.weihungli.springbootmall.rowmapper.ProductRowMapper;
+import org.springframework.jdbc.core.PreparedStatementCreator;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
+import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Component;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -36,5 +42,30 @@ public class ProductDaoImpl implements ProductDao {
         else{
             return null;
         }
+    }
+
+    @Override
+    public Integer createProduct(ProductRequest productRequest) {
+        String sql = "Insert INTO product(product_name, category, image_url, price, stock, description,created_date, last_modified_date )"+
+                "VALUES (:productName, :category, :imageUrl, :price, :stock, :description, :created_date, :last_modified_date)";
+        Map<String,Object> map= new HashMap<>();
+        map.put("productName", productRequest.getProductName());
+        map.put("category", productRequest.getProductCategory().toString());
+        map.put("imageUrl", productRequest.getProductImgUrl());
+        map.put("price", productRequest.getProductPrice());
+        map.put("stock", productRequest.getProductStock());
+        map.put("description", productRequest.getProductDesc());
+
+        Date date = new Date();
+        map.put("created_date",date);
+        map.put("last_modified_date",date);
+
+        KeyHolder keyHolder = new GeneratedKeyHolder();
+
+        namedParameterJdbcTemplate.update(sql,new MapSqlParameterSource(map),keyHolder);
+
+        Integer productId = keyHolder.getKey().intValue();
+
+        return productId;
     }
 }
