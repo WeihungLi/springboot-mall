@@ -1,5 +1,6 @@
 package com.weihungli.springbootmall.service;
 import com.weihungli.springbootmall.constant.ProductCategory;
+import com.weihungli.springbootmall.dto.ProductQueueParams;
 import com.weihungli.springbootmall.dto.ProductRequest;
 import com.weihungli.springbootmall.model.Product;
 
@@ -8,7 +9,7 @@ import java.util.List;
 
 public interface ProductService {
 
-    List<Product> getProducts(ProductCategory productCategory,String search);
+    List<Product> getProducts(ProductQueueParams params);
 
     Product getProductById(Integer id);
 

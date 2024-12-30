@@ -2,6 +2,7 @@ package com.weihungli.springbootmall.controller;
 
 
 import com.weihungli.springbootmall.constant.ProductCategory;
+import com.weihungli.springbootmall.dto.ProductQueueParams;
 import com.weihungli.springbootmall.dto.ProductRequest;
 import com.weihungli.springbootmall.model.Product;
 import com.weihungli.springbootmall.service.ProductService;
@@ -23,8 +24,10 @@ public class ProductController {
     public ResponseEntity<List<Product>> getProducts(@RequestParam(required = false) ProductCategory category,
                                                      @RequestParam(required = false) String search)
     {
-
-        List<Product> productList = productService.getProducts(category,search);
+        ProductQueueParams params = new ProductQueueParams();
+        params.setCategory(category);
+        params.setSearch(search);
+        List<Product> productList = productService.getProducts(params);
 
         return ResponseEntity.status(HttpStatus.OK).body(productList);
     }

@@ -2,6 +2,7 @@ package com.weihungli.springbootmall.service.Impl;
 
 import com.weihungli.springbootmall.constant.ProductCategory;
 import com.weihungli.springbootmall.dao.ProductDao;
+import com.weihungli.springbootmall.dto.ProductQueueParams;
 import com.weihungli.springbootmall.dto.ProductRequest;
 import com.weihungli.springbootmall.model.Product;
 import com.weihungli.springbootmall.service.ProductService;
@@ -18,8 +19,8 @@ public class ProductServiceImpl implements ProductService {
 
 
     @Override
-    public List<Product> getProducts(ProductCategory productCategory,String search) {
-        return productDao.getProducts(productCategory,search);
+    public List<Product> getProducts(ProductQueueParams params) {
+        return productDao.getProducts(params);
     }
 
     @Override
