@@ -30,4 +30,10 @@ public class ProductServiceImpl implements ProductService {
 
         return null;
     }
+
+    @Override
+    public Void deleteProduct(Integer id) {
+        productDao.deleteProduct(id);
+        return null;
+    }
 }
