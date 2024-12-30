@@ -2,9 +2,12 @@ package com.weihungli.springbootmall.service;
 import com.weihungli.springbootmall.dto.ProductRequest;
 import com.weihungli.springbootmall.model.Product;
 
+import java.util.List;
 
 
 public interface ProductService {
+
+    List<Product> getProducts();
 
     Product getProductById(Integer id);
 
