@@ -1,5 +1,6 @@
 package com.weihungli.springbootmall.dao.Impl;
 
+import com.weihungli.springbootmall.constant.ProductCategory;
 import com.weihungli.springbootmall.dao.ProductDao;
 import com.weihungli.springbootmall.dto.ProductRequest;
 import com.weihungli.springbootmall.model.Product;
@@ -28,11 +29,19 @@ public class ProductDaoImpl implements ProductDao {
 
 
     @Override
-    public List<Product> getProducts() {
+    public List<Product> getProducts(ProductCategory productCategory,String search) {
         String sql = "select product_id,product_name, category, image_url, price, stock, description, created_date, last_modified_date "+
-                "from product";
+                "from product WHERE 1=1";
         Map<String, Object> map = new HashMap<String, Object>();
 
+        if (productCategory != null) {
+            sql = sql +" AND category = :productCategory";
+            map.put("productCategory", productCategory.name());
+        }
+        if (search != null) {
+            sql = sql +" AND  product_name LIKE :search";
+            map.put("search", "%" + search + "%");
+        }
 
         List<Product> productList = namedParameterJdbcTemplate.query(sql, map, new ProductRowMapper());
 

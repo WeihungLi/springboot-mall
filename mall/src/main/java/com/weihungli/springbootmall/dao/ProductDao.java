@@ -1,5 +1,6 @@
 package com.weihungli.springbootmall.dao;
 
+import com.weihungli.springbootmall.constant.ProductCategory;
 import com.weihungli.springbootmall.dto.ProductRequest;
 import com.weihungli.springbootmall.model.Product;
 
@@ -8,7 +9,7 @@ import java.util.List;
 public interface ProductDao {
 
 
-    List<Product> getProducts();
+    List<Product> getProducts(ProductCategory productCategory,String search);
 
     Product getProductById(Integer id);
 

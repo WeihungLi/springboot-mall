@@ -1,5 +1,6 @@
 package com.weihungli.springbootmall.service.Impl;
 
+import com.weihungli.springbootmall.constant.ProductCategory;
 import com.weihungli.springbootmall.dao.ProductDao;
 import com.weihungli.springbootmall.dto.ProductRequest;
 import com.weihungli.springbootmall.model.Product;
@@ -17,8 +18,8 @@ public class ProductServiceImpl implements ProductService {
 
 
     @Override
-    public List<Product> getProducts() {
-        return productDao.getProducts();
+    public List<Product> getProducts(ProductCategory productCategory,String search) {
+        return productDao.getProducts(productCategory,search);
     }
 
     @Override
