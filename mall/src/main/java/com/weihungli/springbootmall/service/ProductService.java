@@ -9,4 +9,6 @@ public interface ProductService {
     Product getProductById(Integer id);
 
     Integer createProduct(ProductRequest productRequest);
+
+    Void updateProduct(Integer id, ProductRequest productRequest);
 }
