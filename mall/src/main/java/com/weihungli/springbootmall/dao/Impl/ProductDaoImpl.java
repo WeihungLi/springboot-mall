@@ -35,14 +35,7 @@ public class ProductDaoImpl implements ProductDao {
                 "from product WHERE 1=1";
         Map<String, Object> map = new HashMap<String, Object>();
         //查詢條件
-        if (params.getCategory() != null) {
-            sql = sql +" AND category = :productCategory";
-            map.put("productCategory", params.getCategory().name());
-        }
-        if (params.getSearch() != null) {
-            sql = sql +" AND  product_name LIKE :search";
-            map.put("search", "%" + params.getSearch() + "%");
-        }
+        sql = addFiliteringSql(sql,map,params);
         //排序
         sql = sql +" Order by " + params.getOrderBy()+" "+params.getSort();
         //分頁
@@ -61,14 +54,7 @@ public class ProductDaoImpl implements ProductDao {
         String sql = "select COUNT(product_id) from product WHERE 1=1";
         Map<String, Object> map = new HashMap<String, Object>();
         //查詢條件
-        if (params.getCategory() != null) {
-            sql = sql +" AND category = :productCategory";
-            map.put("productCategory", params.getCategory().name());
-        }
-        if (params.getSearch() != null) {
-            sql = sql +" AND  product_name LIKE :search";
-            map.put("search", "%" + params.getSearch() + "%");
-        }
+        sql = addFiliteringSql(sql,map,params);
 
 
         return namedParameterJdbcTemplate.queryForObject(sql, map, Integer.class);
@@ -147,5 +133,21 @@ public class ProductDaoImpl implements ProductDao {
 
         namedParameterJdbcTemplate.update(sql,map);
         return null;
+    }
+
+
+    private String addFiliteringSql(String sql,Map<String,Object> map,ProductQueueParams params) {
+
+
+        if (params.getCategory() != null) {
+            sql = sql +" AND category = :productCategory";
+            map.put("productCategory", params.getCategory().name());
+        }
+        if (params.getSearch() != null) {
+            sql = sql +" AND  product_name LIKE :search";
+            map.put("search", "%" + params.getSearch() + "%");
+        }
+
+        return sql;
     }
 }
