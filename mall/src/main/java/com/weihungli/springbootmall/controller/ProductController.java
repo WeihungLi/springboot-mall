@@ -6,6 +6,7 @@ import com.weihungli.springbootmall.dto.ProductQueueParams;
 import com.weihungli.springbootmall.dto.ProductRequest;
 import com.weihungli.springbootmall.model.Product;
 import com.weihungli.springbootmall.service.ProductService;
+import com.weihungli.springbootmall.util.Page;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
@@ -25,7 +26,7 @@ public class ProductController {
     private ProductService productService;
 
     @GetMapping("/products")
-    public ResponseEntity<List<Product>> getProducts(@RequestParam(required = false) ProductCategory category,
+    public ResponseEntity<Page<Product>> getProducts(@RequestParam(required = false) ProductCategory category,
                                                      @RequestParam(required = false) String search,
                                                      @RequestParam(defaultValue = "created_date") String orderBy,
                                                      @RequestParam(defaultValue = "desc") String sort,
@@ -41,7 +42,15 @@ public class ProductController {
         params.setOffset(offset);
         List<Product> productList = productService.getProducts(params);
 
-        return ResponseEntity.status(HttpStatus.OK).body(productList);
+        Integer productTotal = productService.getTotal(params);
+
+        Page<Product> page = new Page<>();
+        page.setTotal(productTotal);
+        page.setResult(productList);
+        page.setLimit(limit);
+        page.setOffset(offset);
+
+        return ResponseEntity.status(HttpStatus.OK).body(page);
     }
 
 

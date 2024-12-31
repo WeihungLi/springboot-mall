@@ -24,6 +24,11 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
+    public Integer getTotal(ProductQueueParams params) {
+        return productDao.getTotal(params);
+    }
+
+    @Override
     public Product getProductById(Integer id) {
         return productDao.getProductById(id);
     }
