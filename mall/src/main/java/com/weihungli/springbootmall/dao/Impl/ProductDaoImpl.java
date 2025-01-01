@@ -135,8 +135,21 @@ public class ProductDaoImpl implements ProductDao {
         return null;
     }
 
+    @Override
+    public Void updateStock(Integer productId, Integer stock) {
+        String sql = "UPDATE product SET stock= :stock,last_modified_date = :last_modified_date "+
+                "WHERE product_id = :productId";
+        Map<String,Object> map= new HashMap<>();
+        map.put("productId", productId);
+        map.put("stock",stock);
 
-    private String addFiliteringSql(String sql,Map<String,Object> map,ProductQueueParams params) {
+        map.put("last_modified_date",new Date());
+
+        namedParameterJdbcTemplate.update(sql,map);
+        return null;
+    }
+
+    private String addFiliteringSql(String sql, Map<String,Object> map, ProductQueueParams params) {
 
 
         if (params.getCategory() != null) {
@@ -150,4 +163,6 @@ public class ProductDaoImpl implements ProductDao {
 
         return sql;
     }
+
+
 }
