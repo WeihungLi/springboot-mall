@@ -2,7 +2,7 @@ package com.weihungli.springbootmall.controller;
 
 
 import com.weihungli.springbootmall.constant.ProductCategory;
-import com.weihungli.springbootmall.dto.ProductQueueParams;
+import com.weihungli.springbootmall.dto.ProductQueryParams;
 import com.weihungli.springbootmall.dto.ProductRequest;
 import com.weihungli.springbootmall.model.Product;
 import com.weihungli.springbootmall.service.ProductService;
@@ -33,7 +33,7 @@ public class ProductController {
                                                      @RequestParam(defaultValue = "5") @Max(1000) @Min(0) Integer limit,
                                                      @RequestParam(defaultValue = "0") @Min(0) Integer offset)
     {
-        ProductQueueParams params = new ProductQueueParams();
+        ProductQueryParams params = new ProductQueryParams();
         params.setCategory(category);
         params.setSearch(search);
         params.setOrderBy(orderBy);

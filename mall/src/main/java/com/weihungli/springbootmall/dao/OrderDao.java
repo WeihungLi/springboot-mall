@@ -1,6 +1,7 @@
 package com.weihungli.springbootmall.dao;
 
 
+import com.weihungli.springbootmall.dto.OrderQueryParams;
 import com.weihungli.springbootmall.model.Order;
 import com.weihungli.springbootmall.model.OrderItem;
 
@@ -16,4 +17,8 @@ public interface OrderDao {
     Order getOrderById(Integer orderId);
 
     List<OrderItem> getOrderItemsByOrderId(Integer orderId);
+
+    List<Order> getOrders(OrderQueryParams orderQueryParams);
+
+    Integer countOrder(OrderQueryParams orderQueryParams);
 }

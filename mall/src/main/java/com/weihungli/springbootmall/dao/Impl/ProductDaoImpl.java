@@ -1,13 +1,10 @@
 package com.weihungli.springbootmall.dao.Impl;
 
-import com.weihungli.springbootmall.constant.ProductCategory;
 import com.weihungli.springbootmall.dao.ProductDao;
-import com.weihungli.springbootmall.dto.ProductQueueParams;
+import com.weihungli.springbootmall.dto.ProductQueryParams;
 import com.weihungli.springbootmall.dto.ProductRequest;
 import com.weihungli.springbootmall.model.Product;
 import com.weihungli.springbootmall.rowmapper.ProductRowMapper;
-import org.springframework.jdbc.core.PreparedStatementCreator;
-import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
@@ -30,7 +27,7 @@ public class ProductDaoImpl implements ProductDao {
 
 
     @Override
-    public List<Product> getProducts(ProductQueueParams params) {
+    public List<Product> getProducts(ProductQueryParams params) {
         String sql = "select product_id,product_name, category, image_url, price, stock, description, created_date, last_modified_date "+
                 "from product WHERE 1=1";
         Map<String, Object> map = new HashMap<String, Object>();
@@ -50,7 +47,7 @@ public class ProductDaoImpl implements ProductDao {
     }
 
     @Override
-    public Integer getTotal(ProductQueueParams params) {
+    public Integer getTotal(ProductQueryParams params) {
         String sql = "select COUNT(product_id) from product WHERE 1=1";
         Map<String, Object> map = new HashMap<String, Object>();
         //查詢條件
@@ -149,7 +146,7 @@ public class ProductDaoImpl implements ProductDao {
         return null;
     }
 
-    private String addFiliteringSql(String sql, Map<String,Object> map, ProductQueueParams params) {
+    private String addFiliteringSql(String sql, Map<String,Object> map, ProductQueryParams params) {
 
 
         if (params.getCategory() != null) {

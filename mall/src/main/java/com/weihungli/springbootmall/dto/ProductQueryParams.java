@@ -2,7 +2,7 @@ package com.weihungli.springbootmall.dto;
 
 import com.weihungli.springbootmall.constant.ProductCategory;
 
-public class ProductQueueParams {
+public class ProductQueryParams {
     private ProductCategory category;
     private String search;
     private String orderBy;
