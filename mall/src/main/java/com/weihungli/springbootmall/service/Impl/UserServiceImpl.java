@@ -2,6 +2,7 @@ package com.weihungli.springbootmall.service.Impl;
 
 
 import com.weihungli.springbootmall.dao.UserDao;
+import com.weihungli.springbootmall.dto.UserLoginRequest;
 import com.weihungli.springbootmall.dto.UserRegisterRequest;
 import com.weihungli.springbootmall.model.User;
 import com.weihungli.springbootmall.service.UserService;
@@ -38,5 +39,24 @@ public class UserServiceImpl implements UserService {
     public User getUserById(Integer UserId) {
         User user = userDao.getUserById(UserId);
         return user;
+    }
+
+    @Override
+    public User login(UserLoginRequest userLoginRequest) {
+        User user = userDao.getUserByEmail(userLoginRequest.getEmail());
+
+        if(user != null){
+            if(user.getPassword().equals(userLoginRequest.getPassword())){
+                return user;
+            }
+            else{
+                log.warn("該 Password:{} 並非該Email:{} 之密碼",userLoginRequest.getPassword(),userLoginRequest.getEmail());
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+            }
+        }
+        else{
+            log.warn("該 Email:{} 尚未註冊",userLoginRequest.getEmail());
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+        }
     }
 }
