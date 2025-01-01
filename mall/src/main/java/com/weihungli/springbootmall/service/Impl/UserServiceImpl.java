@@ -11,6 +11,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
+import org.springframework.util.DigestUtils;
 import org.springframework.web.server.ResponseStatusException;
 
 
@@ -32,6 +33,11 @@ public class UserServiceImpl implements UserService {
             log.warn("該 Email:{} 已被註冊",userRegisterRequest.getEmail());
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
         }
+
+        //密碼使用Hash加密(MD5)
+        String hashedPassword = DigestUtils.md5DigestAsHex(userRegisterRequest.getPassword().getBytes());
+        userRegisterRequest.setPassword(hashedPassword);
+
         return userDao.CreateUser(userRegisterRequest);
     }
 
@@ -46,7 +52,10 @@ public class UserServiceImpl implements UserService {
         User user = userDao.getUserByEmail(userLoginRequest.getEmail());
 
         if(user != null){
-            if(user.getPassword().equals(userLoginRequest.getPassword())){
+            //密碼使用Hash驗證是否相同
+            String hashedPassword = DigestUtils.md5DigestAsHex(userLoginRequest.getPassword().getBytes());
+
+            if(user.getPassword().equals(hashedPassword)) {
                 return user;
             }
             else{
